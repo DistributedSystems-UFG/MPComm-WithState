@@ -5,9 +5,15 @@ import random
 import time
 import pickle
 
-#myAddresses = gethostbyname_ex(gethostname()) # Does not work in EC2 for public address
+# Replicated variable
+balance = 0
 
-#handShakes = [] # not used; only if we need to check whose handshake is missing
+# List of operations
+ops = ['deposit', 'interest']
+
+# Ranges of values
+depositRange = [1, 100]
+interestRange = [1, 3]
 
 # Counter to make sure we have received handshakes from all other processes
 handShakeCount = 0
@@ -24,10 +30,6 @@ serverSock = socket(AF_INET, SOCK_STREAM)
 serverSock.bind(('0.0.0.0', PEER_TCP_PORT))
 serverSock.listen(1)
 
-# i = 0
-# while i < N:
-#   handShakes.append(0)
-#   i = i + 1 
 
 class MsgHandler(threading.Thread):
   def __init__(self, sock):
@@ -37,7 +39,6 @@ class MsgHandler(threading.Thread):
   def run(self):
     print('Handler is ready. Waiting for the handshakes...')
     
-    #global handShakes
     global handShakeCount
     
     logList = []
@@ -53,7 +54,6 @@ class MsgHandler(threading.Thread):
         # To do: send reply of handshake and wait for confirmation
 
         handShakeCount = handShakeCount + 1
-        #handShakes[msg[1]] = 1
         print('--- Handshake received: ', msg[1])
 
     print('Secondary Thread: Received all handshakes. Entering the loop to receive messages.')
@@ -62,12 +62,19 @@ class MsgHandler(threading.Thread):
     while True:                
       msgPack = self.sock.recv(1024)   # receive data from client
       msg = pickle.loads(msgPack)
+
       if msg[0] == -1:   # count the 'stop' messages from the other processes
         stopCount = stopCount + 1
         if stopCount == N:
           break  # stop loop when all other processes have finished
       else:
-        print('Message ' + str(msg[1]) + ' from process ' + str(msg[0]))
+        print('Message ' + str(msg[1]) + ' from process ' + str(msg[0]) + '. It is a ' + msg[2] + ' of ' + msg[3])
+
+        if (msg[2] == 'deposit'):
+          balance = balance + msg[3]
+        else:
+          balance = balance + balance * msg[3]
+
         logList.append(msg)
         
     # Write log file
@@ -145,7 +152,14 @@ while 1:
   for msgNumber in range(0, nMsgs):
     # Wait some random time between successive messages
     time.sleep(random.randrange(10,100)/1000)
-    msg = (myself, msgNumber)
+    
+    opNum = random.randrange(0,1)
+    if opNum == 0:
+      opValue = random.randrange(depositRange[0],depositRange[1])
+    else:
+      opValue = random.randrange(interestRange[0],interestRange[1])
+
+    msg = (myself, msgNumber, ops[opNum], opValue)
     msgPack = pickle.dumps(msg)
     for addrToSend in PEERS:
       sendSocket.sendto(msgPack, (addrToSend,PEER_UDP_PORT))
