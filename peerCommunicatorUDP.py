@@ -5,9 +5,6 @@ import random
 import time
 import pickle
 
-# Replicated variable
-balance = 0
-
 # List of operations
 ops = ['deposit', 'interest']
 
@@ -32,6 +29,9 @@ serverSock.listen(1)
 
 
 class MsgHandler(threading.Thread):
+  # Replicated variable (re-initialized at each session to ease comparison)
+  balance = 0
+
   def __init__(self, sock):
     threading.Thread.__init__(self)
     self.sock = sock
@@ -40,7 +40,6 @@ class MsgHandler(threading.Thread):
     print('Handler is ready. Waiting for the handshakes...')
     
     global handShakeCount
-    global balance
     
     logList = []
     
