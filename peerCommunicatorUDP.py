@@ -71,9 +71,9 @@ class MsgHandler(threading.Thread):
         print('Message ' + str(msg[1]) + ' from process ' + str(msg[0]) + '. It is a ' + msg[2] + ' of ' + str(msg[3]))
 
         if (msg[2] == 'deposit'):
-          balance = balance + msg[3]
+          self.balance = self.balance + msg[3]
         else:
-          balance = balance + balance * msg[3]
+          self.balance = self.balance + self.balance * msg[3]
 
         logList.append(msg)
         
