@@ -20,4 +20,9 @@ SERVER_PORT = 5678
 # Number of valid operations to call
 NUM_OPS = 2
 
+# List of operations
+ops = ['deposit', 'interest']
 
+# Ranges of values
+depositRange = [1, 10]
+interestRange = [1, 2]

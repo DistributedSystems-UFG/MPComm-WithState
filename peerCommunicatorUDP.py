@@ -5,13 +5,6 @@ import random
 import time
 import pickle
 
-# List of operations
-ops = ['deposit', 'interest']
-
-# Ranges of values
-depositRange = [1, 10]
-interestRange = [1, 2]
-
 # Counter to make sure we have received handshakes from all other processes
 handShakeCount = 0
 
