@@ -84,7 +84,7 @@ class MsgHandler(threading.Thread):
     logFile.close()
 
     # Write final value of the replicated variable
-    print('======>>>>> Final balance: ' + str(round(self.balance), 3))
+    print('======>>>>> Final balance: ' + str(round(self.balance, 3)))
     
     # Send the list of messages to the server (using a TCP socket) for comparison
     print('Sending the list of messages to the server for comparison...')
