@@ -156,11 +156,11 @@ while 1:
     # Wait some random time between successive messages
     time.sleep(random.randrange(10,100)/1000)
     
-    opNum = random.randrange(0,1)
+    opNum = random.randrange(0,NUM_OPS)
     if opNum == 0:
-      opValue = random.randrange(depositRange[0],depositRange[1])
+      opValue = random.randrange(depositRange[0],depositRange[1]+1)
     else:
-      opValue = random.randrange(interestRange[0],interestRange[1])
+      opValue = random.randrange(interestRange[0],interestRange[1]+1)
 
     msg = (myself, msgNumber, ops[opNum], opValue)
     msgPack = pickle.dumps(msg)

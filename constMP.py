@@ -17,3 +17,7 @@ N = 6   # Number of peers
 SERVER_ADDR ='3.219.23.96'
 SERVER_PORT = 5678
 
+# Number of valid operations to call
+NUM_OPS = 2
+
+
