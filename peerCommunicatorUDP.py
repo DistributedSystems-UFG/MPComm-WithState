@@ -68,7 +68,7 @@ class MsgHandler(threading.Thread):
         if stopCount == N:
           break  # stop loop when all other processes have finished
       else:
-        print('Message ' + str(msg[1]) + ' from process ' + str(msg[0]) + '. It is a ' + msg[2] + ' of ' + msg[3])
+        print('Message ' + str(msg[1]) + ' from process ' + str(msg[0]) + '. It is a ' + msg[2] + ' of ' + str(msg[3]))
 
         if (msg[2] == 'deposit'):
           balance = balance + msg[3]
