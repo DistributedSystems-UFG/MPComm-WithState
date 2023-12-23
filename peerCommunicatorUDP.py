@@ -9,8 +9,8 @@ import pickle
 ops = ['deposit', 'interest']
 
 # Ranges of values
-depositRange = [1, 100]
-interestRange = [1, 3]
+depositRange = [1, 10]
+interestRange = [1, 2]
 
 # Counter to make sure we have received handshakes from all other processes
 handShakeCount = 0
