@@ -40,6 +40,7 @@ class MsgHandler(threading.Thread):
     print('Handler is ready. Waiting for the handshakes...')
     
     global handShakeCount
+    global balance
     
     logList = []
     
